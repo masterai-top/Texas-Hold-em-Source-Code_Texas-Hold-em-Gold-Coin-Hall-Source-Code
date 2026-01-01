@@ -1,0 +1,81 @@
+module signin
+{
+    struct QuerySignInDetailReq
+    {
+        0 require long uid;
+    };
+
+    struct totalItem
+    {
+        0 require bool canReceive;
+        1 require bool hasReceive;
+    };
+
+    struct QuerySignInDetailRsp
+    {
+        0 require int               resultCode;
+        1 require vector<int>       signInTable;
+        2 require vector<totalItem> totalTable;
+        3 require bool              hasSignIn;
+        4 require int               total;
+    };
+
+    struct SignInReq
+    {
+        0 require long uid;
+    };
+
+    struct SignInRsp
+    {
+        0 require int resultCode;
+        1 require int dayIndex;     //签到索引,从0开始
+		2 require int awardIndex;   //奖励索引,从0开始,如果没有累计奖励值为-1
+    };
+
+    struct ReceiveAwardReq
+    {
+        0 require long uid;
+        1 require int  awardIndex;
+    };
+
+    struct ReceiveAwardRsp
+    {
+        0 require int resultCode;
+        1 require int awardIndex; //奖励索引,从0开始
+    };
+
+    struct SignInRewardsQueryReq
+    {
+        0 require long uid;
+    };
+
+    struct SignInRewardsQueryResp
+    {
+        0 require int resultCode;
+        1 require int noviceDays;   //新手期,单位天
+        2 require int regTime;      //注册时间戳
+        3 require int curDayIndex;  //当前第几天,从1开始
+        4 require string rewardsBit;//领取奖励状态标记位,0表示未领取,1表示已领取
+    };
+
+    //新手签到奖励
+    struct SignInRewards
+    {
+        0 optional int dayIndex;//第几天,从1开始
+        1 optional int rewardID;//奖励ID
+    };
+
+    //领取新手签到奖励请求
+    struct SignInRewardsGetReq
+    {
+        0 optional long uid;
+        1 optional SignInRewards reward;
+    };
+
+    //领取新手签到奖励应答
+    struct SignInRewardsGetResp
+    {
+        0 optional int resultCode;
+        1 optional SignInRewards reward;
+    };
+};

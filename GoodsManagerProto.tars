@@ -1,0 +1,122 @@
+module GoodsManager
+{
+
+struct GoodsDetail
+{
+    0 require int  goodsID;
+    1 require long  count;
+};
+
+struct GiveGoodsReq
+{
+    0 require long uid;
+    1 require GoodsDetail goods;
+    2 optional int changeType;	//变更类型,
+    3 optional string roomID;//房间ID
+    4 optional string taskID;//任务ID
+    5 optional int rank; //比赛场名次
+};
+
+struct GiveGoodsRsp
+{
+    0 require int resultCode;
+};
+
+struct GoodsRewardInfo
+{
+    0 require map<long, GiveGoodsReq> data;
+};
+
+struct GetGoodsListReq
+{
+    0 require long uid;
+};
+
+struct GetGoodsListRsp
+{
+    0 require int resultCode;
+    1 require vector<GoodsDetail> goodsVec;
+};
+
+struct GiveGoodsToAllPlayerReq
+{
+    0 require GoodsDetail goods;
+};
+
+struct GiveGoodsToAllPlayerRsp
+{
+    0 require int resultCode;
+};
+
+struct DeleteGoodsReq
+{
+    0 require GoodsDetail goods;
+    1 require long        uid;
+    2 optional int changeType;    //变更类型
+};
+
+struct DeleteGoodsRsp
+{
+    0 require int resultCode;
+};
+
+struct UserGoodsReq
+{
+    0 require long uid;
+    1 require GoodsDetail goods;
+};
+
+struct UserGoodsRsp
+{
+    0 require int resultCode;
+    // 这里是否需要返回得到的物品  TODO
+};
+
+struct GiveGoodsToBunchPlayerReq
+{
+    0 require vector<long> uidVec;
+    1 require GoodsDetail goods;
+};
+
+struct GiveGoodsToBunchPlayerResp
+{
+    0 require int resultCode;
+    1 require vector<long> failedUidVec;//未成功发送道具的玩家列表
+};
+
+struct GetAGoodsCountReq
+{
+    0 require long uid;
+    1 require int goodsID;
+};
+
+struct GetAGoodsCountRsp
+{
+    0 require int resultCode;
+    1 require int count;
+};
+
+struct GetTypeGoodsCountReq
+{
+    0 require long uid;
+    1 require int goodsType;
+};
+
+struct GetTypeGoodsCountRsp
+{
+    0 require int resultCode;
+    1 require vector<GoodsDetail> goodsVec;
+};
+
+struct GiveManyGoodsReq
+{
+    0 require long uid;
+    1 require vector<GoodsDetail> goods;
+};
+
+struct GiveManyGoodsResp
+{
+    0 require int resultCode;
+};
+
+}; 

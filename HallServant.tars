@@ -1,0 +1,167 @@
+#include "HallProto.tars"
+#include "TaskProto.tars"
+#include "UserInfoProto.tars"
+#include "MailProto.tars"
+#include "MallProto.tars"
+#include "GoodsManagerProto.tars"
+
+#include "/home/tarsproto/XGame/Comm/JFGame.tars"
+
+module hall
+{
+    /**
+    *大厅接口
+    */
+    interface HallServant
+    {
+        //http请求处理接口
+        int doRequest(vector<byte> reqBuf, map<string, string> extraInfo, out vector<byte> rspBuf);
+
+        //tcp请求处理接口
+        int onRequest(long lUin, string sMsgPack, string sCurServrantAddr, JFGame::TClientParam stClientParam, JFGame::UserBaseInfoExt stUserBaseInfo);
+
+        //同步网关用户状态
+        int RouterUserState(RouterUserStateReq req, out RouterUserStateResp resp);
+
+        //测试接口
+        int test();
+
+        //task
+        //任务采集
+        int collectRecord(task::CollectReq req);
+
+        //任务查询
+        int query(task::TaskQueryReq req, out task::TaskQueryResp resp);
+
+        //获得奖励
+        int aquireReward(task::AquireRewardReq req, out task::AquireRewardResp resp);
+
+        //获取用户基本信息
+        int getUserBasic(userinfo::GetUserBasicReq req, out userinfo::GetUserBasicResp resp); 
+
+        //获取用户账户
+        int getUserAccount(userinfo::GetUserAccountReq req, out userinfo::GetUserAccountResp resp);
+        
+        //添加用户
+        int createUser(userinfo::InitUserReq req, out userinfo::InitUserResp resp);
+
+        //更新财富
+        int modifyUserWealth(userinfo::ModifyUserWealthReq req, out userinfo::ModifyUserWealthResp resp);
+
+        //更新用户信息
+        int UpdateUserInfo(userinfo::UpdateUserInfoReq req, out userinfo::UpdateUserInfoResp resp);
+
+        //修改用户账户
+        int updateUserAccount(userinfo::UpdateUserAccountReq req, out userinfo::UpdateUserAccountResp resp);
+
+        // 更新用户等级经验
+        int UpdateUserLevelExperience(userinfo::UpdateUserExperienceReq req, out userinfo::UpdateUserExperienceResp rsp);
+
+        //取收件箱数据请求
+        // int getMailData(long uid, short nGameId, mail::TGetMailDataReq tGetMailDataReq, out mail::TGetMailDataResp tGetMailDataResp);
+
+        // //发送数据请求
+        // int sendMail(long uid, short nGameId, mail::TSendMailReq tSendMailReq, out mail::TSendMailRsp tSendMailRsp);
+
+        // //收邮件请求
+        // int receiveMail(long uid, short nGameId, mail::TReceiveMailReq tReceiveMailReq, out mail::TReceiveMailRsp tReceiveMailRsp);
+
+        //产生系统消息
+        int genSysMsg(mail::SysMsgReq req, out mail::SysMsgResp resp);
+
+        //产生消息
+        int genMessage(mail::MessageReq req, out mail::MessageResp resp);
+
+        //产生邮件
+        int sendMailToUserFromSystem(mail::TSendMailReq req, out mail::TSendMailResp resp);
+
+        //接收邮件
+        int receiveMail(mail::TReceiveMailReq req, out mail::TReceiveMailRsp resp);
+
+        //领取奖励
+        int fetchAward(mail::TGetMailDataReq req, out mail::TGetMailDataResp resp);
+
+        //删除邮件
+        int deleteMail(mail::TDeleteMailReq req, out mail::TDeleteMailResp resp);
+
+        //群发邮件
+        int groupSendMail(mail::TGourpSendMailReq req, out mail::TGourpSendMailResp resp);
+
+        //读邮件
+        int readMail(mail::TReadMailReq req, out mail::TReadMailResp resp);
+
+        //发货
+        int dispatchGoods(mall::DispatchGoodsReq req, out mall::DispatchGoodsResp resp);
+
+        //goods
+        // 发放道具
+        int giveGoods(GoodsManager::GiveGoodsReq req, out GoodsManager::GiveGoodsRsp resp);
+        int giveManyGoods(GoodsManager::GiveManyGoodsReq req, out GoodsManager::GiveManyGoodsResp resp);
+
+        //查询背包里的全包道具
+        int getGoodsList(GoodsManager::GetGoodsListReq req, out GoodsManager::GetGoodsListRsp resp);
+        
+        // 消耗物品
+        int costGoods(GoodsManager::DeleteGoodsReq req, out GoodsManager::DeleteGoodsRsp resp);
+
+        // 使用物品
+        int useGoods(GoodsManager::UserGoodsReq req, GoodsManager::UserGoodsRsp resp);
+
+        // 发放物品给一群玩家
+        int giveGoodsToBunchPlayer(GoodsManager::GiveGoodsToBunchPlayerReq req, out GoodsManager::GiveGoodsToBunchPlayerResp resp);
+
+        //发放道具给所有玩家
+        int giveGoodsToAllPlayer(GoodsManager::GiveGoodsToAllPlayerReq req, out GoodsManager::GiveGoodsToAllPlayerRsp resp);
+
+        // 查询玩家指定道具的个数
+        int getAGoodsCount(GoodsManager::GetAGoodsCountReq req, out GoodsManager::GetAGoodsCountRsp resp);
+
+        // 查询指定类型道具的个数
+        int getTypeGoodsCount(GoodsManager::GetTypeGoodsCountReq req, out GoodsManager::GetTypeGoodsCountRsp resp);
+
+        // 兑换单个道具
+        int goodsExchange(mall::GoodsExchangeReq req, out mall::GoodsExchangeResp resp);
+
+        //
+        int reportRoomTableStat(hall::RoomTableStat data);
+
+        // 兑换实物
+        int exchangeGoods(hall::ExchangeGoodsReq req, out hall::ExchangeGoodsResp resp);
+
+        //重新加载邮件配置
+        int reloadMailConfig();
+
+        //修改用户白名单
+        int updateUserAccountInWhiteList(long uid, int isinwhitelist);
+
+        //冻结解冻用户
+        int updateUserAccountForbidden(long uid, int isForbidden);
+
+        //修改注册时间
+        int ModifyUserRegTime(long uid, string regtime);
+
+        //修改邮箱账户密码
+        int ModifyUserPassword(long lUid, string oldPassword, string newPassword);
+
+        //添加红点
+        int AddRedDot(long lUid, int type);
+
+        //删除红点
+        int RemoveRedDot(long lUid, int type);
+
+        //获取红点列表
+        int GetRedDotList(long lUid, out vector<int> reddotlist);
+
+        //转账
+        int tranferGoods(long srcUid, long dstUid, map<long, long> mapPropsInfo);
+
+        //添加代理
+        int addRecommend(long lUid, long dstUid);
+
+        //获取指定道具数量(背包道具, 账户道具)
+        int getUserBagById(long lUid, long lPid);
+
+        //更新道具(背包道具, 账户道具)
+        int modifyUserBag(userinfo::ModifyUserBagReq req, out userinfo::ModifyUserBagResp resp);
+    };
+}; 

@@ -1,0 +1,116 @@
+/**
+    商城
+ */
+module mall 
+{
+    //区域
+    enum E_REGION
+    {
+        E_REGION_LOCAL          = 0, // 本地测试
+        E_REGION_TAIWAN         = 1, // 台湾
+        E_REGION_SOUTHEAST_ASIA = 2, // 东南亚
+        E_REGION_HONG_KONG      = 3, // 香港
+        E_REGION_MACAO          = 4, // 澳门
+    };
+    
+    //平台类型
+    enum E_PLATFORM_TYPE
+    {
+        E_PLATFORM_IOS = 1, //ios
+        E_PLATFORM_ANDROID = 2, //安卓
+    };
+
+    //菜单类型
+    enum E_MENU_TYPE
+    {
+        //E_MENU_TYPE_GOLD_CHARGE       = 1, //金币购买
+        //E_MENU_TYPE_DIAMOND_CHARGE    = 2, //钻石购买
+        //E_MENU_TYPE_SCORE_HARGE       = 3, //充值积分
+        //E_MENU_TYPE_PACKEAGE          = 4, //包裹
+
+        E_MENU_TYPE_NONE           = 0,
+        E_MENU_TYPE_GOLD_CHARGE    = 1,//金币购买
+        E_MENU_TYPE_DIAMOND_CHARGE = 2,//钻石购买
+        E_MENU_TYPE_SCORE_HARGE    = 3,//充值积分
+        E_MENU_TYPE_LUCKPACK       = 4,//幸运礼包
+        E_MENU_TYPE_SPECIALPACK    = 5,//特惠礼包
+        E_MENU_TYPE_RECHARGE       = 6,//充值活动
+        E_MENU_TYPE_EXPRESSION     = 7,//表情包
+        E_MENU_TYPE_PROPS          = 8,//刮刮卡
+        E_MENU_TYPE_TREASURE       = 9,//夺宝券
+        E_MENU_TYPE_BANKRUPT       = 10,//破产救济
+        E_MENU_TYPE_FIRST_RECHARGE = 11,//首次充值
+    };
+
+    struct GoodsGroup
+    {
+        0 require int GoodsID     = 1;
+        1 require double GoodsCount  = 2;
+    };
+
+    //商品详情
+    struct GoodsDetail
+    {
+        0 require vector<GoodsGroup> exchanges;//获得道具组合
+        1 require double consumeGoodsCount;    //消耗道具数量
+        2 require int consumeGoodsID;          //消耗道具ID
+        3 require int QRCode;                  //商品ID
+        4 require string product_id;           //充值商品ID
+        5 require string icon;                 //商品图标
+        6 require string discount;             //优惠百分比
+        7 require int hot;                     //商品热度:0-否,1-是
+    };
+
+    struct GoodsDetailList
+    {
+        0 require map<int, GoodsDetail> goodInfos;
+    };
+
+    struct GoodsBuyReq
+    {
+        0 require int               QRCode;//商品二维码
+        1 require int               count;//购买的数量
+        2 require E_PLATFORM_TYPE   platform;
+        3 require E_MENU_TYPE       menuType;
+        4 require long              uid;
+    };
+
+    struct GoodsBuyResp
+    {
+        0 require int resultCode;
+        1 require GoodsDetail detail;
+    };
+
+    struct DispatchGoodsReq
+    {
+        0 require long uid;
+        1 require string product_id; //商品id
+        2 require double discount;//折扣
+        3 optional string orderID;//订单号
+    };
+
+    struct DispatchGoodsResp
+    {
+        0 require int resultCode;
+        1 require string product_id;
+        2 require long count;
+    };
+
+    struct ItmeDetail
+    {
+        0 require int goodsID; //物品ID
+        1 require int count; //数量
+    };
+
+    struct GoodsExchangeReq
+    {
+        0 require long uid;
+        1 require int goodsID; //道具ID
+    };
+
+    struct GoodsExchangeResp
+    {
+        0 require int resultCode; //返回值
+        1 require vector<ItmeDetail> items; //获得道具
+    };
+};
